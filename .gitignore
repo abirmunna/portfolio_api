@@ -12,7 +12,7 @@ Discovery.md
 # database
 *.sqlite3
 *.db
-sql_app.db
+/sql_app.db
 
 # Distribution / packaging
 .Python
