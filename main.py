@@ -111,3 +111,24 @@ def awards(awards: schemas.awards, db: SessionLocal = Depends(get_db)):
 def awards(id, db: SessionLocal = Depends(get_db)):
     awards = crud.delete_awards(db, id)
     return awards
+
+@app.get("/funding", tags=['funding'])
+def funding(db: SessionLocal = Depends(get_db)):
+    funding = crud.get_all_funding(db)
+    return funding
+
+@app.post("/funding", tags=['funding'])
+def funding(funding: schemas.create_funding, db: SessionLocal = Depends(get_db)):
+    funding = crud.create_funding(db, funding)
+    return funding
+
+@app.put("/funding", tags=['funding'])
+def funding(funding: schemas.funding, db: SessionLocal = Depends(get_db)):
+    funding = crud.edit_funding(db, funding)
+    return funding
+
+@app.delete("/funding", tags=['funding'])
+def funding(id, db: SessionLocal = Depends(get_db)):
+    funding = crud.delete_funding(db, id)
+    return funding
+

@@ -68,3 +68,33 @@ def delete_awards(db: Session, id: int):
     db.delete(db_awards)
     db.commit()
     return db_awards
+
+
+def get_all_funding(db: Session):
+    return db.query(models.Funding).all()
+
+def create_funding(db: Session, funding: schemas.create_funding):
+    db_funding = models.Funding(year=funding.year, title=funding.title, role=funding.role, awarded_amount=funding.awarded_amount, time_period=funding.time_period, doner=funding.doner)
+    db.add(db_funding)
+    db.commit()
+    db.refresh(db_funding)
+    return db_funding
+
+def edit_funding(db: Session, funding: schemas.funding):
+    db_funding = db.query(models.Funding).filter(models.Funding.id == funding.id).first()
+    db_funding.year = funding.year
+    db_funding.title = funding.title
+    db_funding.role = funding.role
+    db_funding.awarded_amount = funding.awarded_amount
+    db_funding.time_period = funding.time_period
+    db_funding.doner = funding.doner
+    db.commit()
+    db.refresh(db_funding)
+    return db_funding
+
+def delete_funding(db: Session, id: int):
+    db_funding = db.query(models.Funding).filter(models.Funding.id == id).first()
+    db.delete(db_funding)
+    db.commit()
+    return db_funding
+

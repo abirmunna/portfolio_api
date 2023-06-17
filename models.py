@@ -22,4 +22,14 @@ class Awards(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, unique=True, index=True)
     year = Column(String, unique=True, index=True)
-    
+
+
+class Funding(Base):
+    __tablename__ = "funding"
+    id = Column(Integer, primary_key=True, index=True)
+    year = Column(String, unique=True, index=True)
+    title = Column(String, unique=True, index=True)
+    role = Column(String, unique=True, index=True)
+    awarded_amount = Column(String, unique=True, index=True)
+    time_period = Column(String, unique=True, index=True)
+    doner = Column(String, unique=True, index=True)
