@@ -9,6 +9,11 @@ Discovery.md
 # C extensions
 *.so
 
+# database
+*.sqlite3
+*.db
+sql_app.db
+
 # Distribution / packaging
 .Python
 build/

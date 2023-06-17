@@ -16,3 +16,10 @@ class Designation(Base):
     name = Column(String, unique=True, index=True)
     company = Column(String, unique=True, index=True)
     location = Column(String, unique=True, index=True)
+
+class Awards(Base):
+    __tablename__ = "awards"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, unique=True, index=True)
+    year = Column(String, unique=True, index=True)
+    

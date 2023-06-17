@@ -14,12 +14,12 @@ IMAGEDIR = "images/"
 
 app = FastAPI()
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=['*'],
-#     allow_methods=['*'],
-#     allow_headers=['*'],
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 def get_db():
     db = SessionLocal()
@@ -54,22 +54,22 @@ def designation(db: SessionLocal = Depends(get_db)):
     return designation
 
 @app.post('/designation', tags=['designation'])
-def designation(designation: schemas.designation, db: SessionLocal = Depends(get_db)):
+def designation(designation: schemas.create_designation, db: SessionLocal = Depends(get_db)):
     designation = crud.create_designation(db, designation)
     return designation
 
 @app.put('/designation', tags=['designation'])
-def designation(id: int, designation: schemas.designation, db: SessionLocal = Depends(get_db)):
-    designation = crud.edit_designation(id, db, designation)
+def designation(designation: schemas.designation, db: SessionLocal = Depends(get_db)):
+    designation = crud.edit_designation(db, designation)
     return designation
 
 @app.delete('/designation', tags=['designation'])
-def designation(id: int, db: SessionLocal = Depends(get_db)):
-    designation = crud.delete_designation(id, db)
+def designation(id, db: SessionLocal = Depends(get_db)):
+    designation = crud.delete_designation(db, id)
     return designation
 
 # picture section
-@app.post("/upload/")
+@app.post("/upload/", tags=['picture'])
 async def create_upload_file(file: UploadFile = File(...)):
  
     file.filename = f"profile.jpg"
@@ -82,7 +82,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     return {"filename": file.filename}
 
 
-@app.get("/image")
+@app.get("/image", tags=['picture'])
 def get_image():
     image_path = "images/profile.jpg"  # Replace with the actual path to your image
     img = Image.open(image_path)
@@ -90,3 +90,24 @@ def get_image():
     img.save(img_byte_arr, format='JPEG')
     img_byte_arr.seek(0)
     return StreamingResponse(img_byte_arr, media_type="image/jpeg")
+
+
+@app.get("/awards", tags=['awards'])
+def awards(db: SessionLocal = Depends(get_db)):
+    awards = crud.get_all_awards(db)
+    return awards
+
+@app.post("/awards", tags=['awards'])
+def awards(awards: schemas.create_awards, db: SessionLocal = Depends(get_db)):
+    awards = crud.create_awards(db, awards)
+    return awards
+
+@app.put("/awards", tags=['awards'])
+def awards(awards: schemas.awards, db: SessionLocal = Depends(get_db)):
+    awards = crud.edit_awards(db, awards)
+    return awards
+
+@app.delete("/awards", tags=['awards'])
+def awards(id, db: SessionLocal = Depends(get_db)):
+    awards = crud.delete_awards(db, id)
+    return awards
