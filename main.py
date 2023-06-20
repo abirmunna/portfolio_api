@@ -10,7 +10,7 @@ import crud, models, schemas
 from database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
-IMAGEDIR = "images/"
+IMAGEDIR = "tmp/images/"
 
 app = FastAPI()
 
@@ -89,7 +89,7 @@ async def create_upload_file(file: UploadFile = File(...)):
 
 @app.get("/image", tags=['picture'])
 def get_image():
-    image_path = "images/profile.jpg"  # Replace with the actual path to your image
+    image_path = "tmp/images/profile.jpg"  # Replace with the actual path to your image
     img = Image.open(image_path)
     img_byte_arr = BytesIO()
     img.save(img_byte_arr, format='JPEG')
