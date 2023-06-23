@@ -1,5 +1,6 @@
 fastapi[all]
 sqlalchemy
 pillow
+psycopg2
 mysql-connector-python
 

@@ -14,14 +14,11 @@ IMAGEDIR = "tmp/images/"
 
 app = FastAPI()
 
-origins = [
-    "*"
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_headers=["*"],
+    allow_origins=["*"],
+    allow_methods=["*"]
 )
 
 def get_db():
