@@ -1,3 +1,5 @@
 fastapi[all]
 sqlalchemy
 pillow
+mysql-connector-python
+
