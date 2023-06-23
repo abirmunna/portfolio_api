@@ -21,6 +21,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_headers=["*"],
 )
 
 def get_db():
