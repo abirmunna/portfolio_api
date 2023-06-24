@@ -10,7 +10,7 @@ load_dotenv("test.env")
 
 POSTGRESQL_DATABASE_URL = os.getenv("DB")
 
-print(POSTGRESQL_DATABASE_URL)
+# print(POSTGRESQL_DATABASE_URL)
 engine = create_engine(POSTGRESQL_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

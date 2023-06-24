@@ -133,3 +133,64 @@ def delete_funding(db: Session, id: int):
     db.delete(db_funding)
     db.commit()
     return db_funding
+
+
+def get_all_research(db: Session):
+    return db.query(models.Research).order_by(models.Research.id.desc()).all()
+
+def create_research(db: Session, research: schemas.create_research):
+    db_research = models.Research(
+        title=research.title,
+        description=research.description,
+    )
+    db.add(db_research)
+    db.commit()
+    db.refresh(db_research)
+    return db_research
+
+def edit_research(db: Session, research: schemas.research):
+    db_research = (
+        db.query(models.Research).filter(models.Research.id == research.id).first()
+    )
+    update_data = research.dict(exclude_unset=True)
+    db.query(models.Research).filter(models.Research.id == research.id).update(
+        update_data, synchronize_session=False
+    )
+    db.commit()
+    db.refresh(db_research)
+    return db_research
+
+def delete_research(db: Session, id: int):
+    db_research = db.query(models.Research).filter(models.Research.id == id).first()
+    db.delete(db_research)
+    db.commit()
+    return db_research
+
+def get_all_publications(db: Session):
+    return db.query(models.Publications).order_by(models.Publications.id.desc()).all()
+
+def create_publications(db: Session, publications: schemas.create_publications, research_id: int):
+    db_publications = models.Publications(**publications.dict(), research_id=research_id)
+    db.add(db_publications)
+    db.commit()
+    db.refresh(db_publications)
+    return db_publications
+
+def edit_publications(db: Session, publications: schemas.publications):
+    db_publications = (
+        db.query(models.Publications).filter(models.Publications.id == publications.id).first()
+    )
+    update_data = publications.dict(exclude_unset=True)
+    db.query(models.Publications).filter(models.Publications.id == publications.id).update(
+        update_data, synchronize_session=False
+    )
+    db.commit()
+    db.refresh(db_publications)
+    return db_publications
+
+def delete_publications(db: Session, id: int):
+    db_publications = db.query(models.Publications).filter(models.Publications.id == id).first()
+    db.delete(db_publications)
+    db.commit()
+    return db_publications
+

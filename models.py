@@ -35,3 +35,23 @@ class Funding(Base):
     awarded_amount = Column(String(255))
     time_period = Column(String(255))
     doner = Column(String(255))
+
+
+class Research(Base):
+    __tablename__ = "research"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(255))
+    description = Column(String(255))
+
+    publications = relationship("Publications", back_populates="research")
+
+
+class Publications(Base):
+    __tablename__ = "publications"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(255))
+    published = Column(String(255))
+    authors = Column(String(255))
+    research_id = Column(Integer, ForeignKey("research.id"))
+
+    research = relationship("Research", back_populates="publications")

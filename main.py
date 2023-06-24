@@ -190,3 +190,46 @@ def funding(funding: schemas.funding, db: SessionLocal = Depends(get_db)):
 def funding(id, db: SessionLocal = Depends(get_db)):
     funding = crud.delete_funding(db, id)
     return funding
+
+
+@app.get("/research", tags=["research"], response_model=list[schemas.research])
+def research(db: SessionLocal = Depends(get_db)):
+    research = crud.get_all_research(db)
+    return research
+
+@app.post("/research", tags=["research"])
+def research(research: schemas.create_research, db: SessionLocal = Depends(get_db)):
+    research = crud.create_research(db, research)
+    return research
+
+@app.put("/research", tags=["research"])
+def research(research: schemas.create_research, db: SessionLocal = Depends(get_db)):
+    research = crud.edit_research(db, research)
+    return research
+
+@app.delete("/research", tags=["research"])
+def research(id, db: SessionLocal = Depends(get_db)):
+    research = crud.delete_research(db, id)
+    return research
+
+
+@app.get("/publications", tags=["publications"])
+def publications(db: SessionLocal = Depends(get_db)):
+    publications = crud.get_all_publications(db)
+    return publications
+
+@app.post("/publications", tags=["publications"])
+def publications(research_id: int, publications: schemas.create_publications, db: SessionLocal = Depends(get_db)):
+    publications = crud.create_publications(db, publications, research_id)
+    return publications
+
+@app.put("/publications", tags=["publications"])
+def publications(publications: schemas.create_publications, db: SessionLocal = Depends(get_db)):
+    publications = crud.edit_publications(db, publications)
+    return publications
+
+@app.delete("/publications", tags=["publications"])
+def publications(id, db: SessionLocal = Depends(get_db)):
+    publications = crud.delete_publications(db, id)
+    return publications
+

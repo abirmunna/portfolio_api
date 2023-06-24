@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Union, List, Optional
+from typing import Union, Optional
 
 
 class about(BaseModel):
@@ -39,3 +39,29 @@ class create_funding(BaseModel):
 
 class funding(create_funding):
     id: int
+
+
+class create_publications(BaseModel):
+    title: Optional[str]
+    published: Optional[str]
+    authors: Optional[str]
+
+class publications(create_publications):
+    id: int
+    research_id: int
+    
+    class Config:
+        orm_mode = True
+
+
+class create_research(BaseModel):
+    title: str
+    description: str
+
+class research(create_research):
+    id: int
+    publications: list[publications]
+
+    class Config:
+        orm_mode = True
+
