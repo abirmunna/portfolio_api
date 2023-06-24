@@ -27,7 +27,7 @@ def edit_about(db: Session, about: schemas.about):
 
 def get_all_designations(db: Session):
     # return in ascending order
-    return db.query(models.Designation).order_by(models.Designation.id.asc()).all()
+    return db.query(models.Designation).order_by(models.Designation.id.desc()).all()
 
 
 def create_designation(db: Session, designation: schemas.create_designation):
@@ -67,7 +67,7 @@ def delete_designation(db: Session, id: int):
 
 
 def get_all_awards(db: Session):
-    return db.query(models.Awards).order_by(models.Awards.id.asc()).all()
+    return db.query(models.Awards).order_by(models.Awards.id.desc()).all()
 
 
 def create_awards(db: Session, awards: schemas.create_awards):
@@ -97,7 +97,7 @@ def delete_awards(db: Session, id: int):
 
 
 def get_all_funding(db: Session):
-    return db.query(models.Funding).order_by(models.Funding.id.asc()).all()
+    return db.query(models.Funding).order_by(models.Funding.id.desc()).all()
 
 
 def create_funding(db: Session, funding: schemas.create_funding):
