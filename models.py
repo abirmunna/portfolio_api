@@ -10,12 +10,14 @@ class About(Base):
     motto = Column(String(255))
     bio = Column(String(255))
 
+
 class Designation(Base):
     __tablename__ = "designation"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255))
     company = Column(String(255))
     location = Column(String(255))
+
 
 class Awards(Base):
     __tablename__ = "awards"
