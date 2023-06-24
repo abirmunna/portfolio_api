@@ -219,8 +219,8 @@ def publications(db: SessionLocal = Depends(get_db)):
     return publications
 
 @app.post("/publications", tags=["publications"])
-def publications(research_id: int, publications: schemas.create_publications, db: SessionLocal = Depends(get_db)):
-    publications = crud.create_publications(db, publications, research_id)
+def publications(publications: schemas.create_publications, db: SessionLocal = Depends(get_db)):
+    publications = crud.create_publications(db, publications)
     return publications
 
 @app.put("/publications", tags=["publications"])

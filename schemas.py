@@ -45,10 +45,11 @@ class create_publications(BaseModel):
     title: Optional[str]
     published: Optional[str]
     authors: Optional[str]
+    research_id: int
 
 class publications(create_publications):
     id: int
-    research_id: int
+    
     
     class Config:
         orm_mode = True

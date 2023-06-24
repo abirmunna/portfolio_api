@@ -169,8 +169,14 @@ def delete_research(db: Session, id: int):
 def get_all_publications(db: Session):
     return db.query(models.Publications).order_by(models.Publications.id.desc()).all()
 
-def create_publications(db: Session, publications: schemas.create_publications, research_id: int):
-    db_publications = models.Publications(**publications.dict(), research_id=research_id)
+def create_publications(db: Session, publications: schemas.create_publications):
+    db_publications = models.Publications(
+        title=publications.title,
+        published=publications.published,
+        authors=publications.authors,
+        research_id=publications.research_id,
+    )
+
     db.add(db_publications)
     db.commit()
     db.refresh(db_publications)
