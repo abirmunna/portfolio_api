@@ -16,9 +16,8 @@ def create_about(db: Session, about: schemas.about):
 
 def edit_about(db: Session, about: schemas.about):
     db_about = db.query(models.About).filter(models.About.id == about.id).first()
-    db_about.name = about.name
-    db_about.motto = about.motto
-    db_about.bio = about.bio
+    update_data = about.dict(exclude_unset=True)
+    db.query(models.About).filter(models.About.id == about.id).update(update_data,synchronize_session=False)
     db.commit()
     db.refresh(db_about)
     return db_about
@@ -32,9 +31,8 @@ def create_designation(db: Session, designation: schemas.create_designation):
 
 def edit_designation(db: Session, designation: schemas.designation):
     db_designation = db.query(models.Designation).filter(models.Designation.id == designation.id).first()
-    db_designation.name = designation.name
-    db_designation.company = designation.company
-    db_designation.location = designation.location
+    update_data = designation.dict(exclude_unset=True)
+    db.query(models.Designation).filter(models.Designation.id == designation.id).update(update_data,synchronize_session=False)
     db.commit()
     db.refresh(db_designation)
     return db_designation
@@ -57,8 +55,8 @@ def create_awards(db: Session, awards: schemas.create_awards):
 
 def edit_awards(db: Session, awards: schemas.awards):
     db_awards = db.query(models.Awards).filter(models.Awards.id == awards.id).first()
-    db_awards.title = awards.title
-    db_awards.year = awards.year
+    update_data = awards.dict(exclude_unset=True)
+    db.query(models.Awards).filter(models.Awards.id == awards.id).update(update_data,synchronize_session=False)
     db.commit()
     db.refresh(db_awards)
     return db_awards
@@ -82,12 +80,8 @@ def create_funding(db: Session, funding: schemas.create_funding):
 
 def edit_funding(db: Session, funding: schemas.funding):
     db_funding = db.query(models.Funding).filter(models.Funding.id == funding.id).first()
-    db_funding.year = funding.year
-    db_funding.title = funding.title
-    db_funding.role = funding.role
-    db_funding.awarded_amount = funding.awarded_amount
-    db_funding.time_period = funding.time_period
-    db_funding.doner = funding.doner
+    update_data = funding.dict(exclude_unset=True)
+    db.query(models.Funding).filter(models.Funding.id == funding.id).update(update_data,synchronize_session=False)
     db.commit()
     db.refresh(db_funding)
     return db_funding

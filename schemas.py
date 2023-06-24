@@ -1,34 +1,35 @@
 from pydantic import BaseModel
+from typing import Union, List, Optional
 
 class about(BaseModel):
     id: int
-    name: str 
-    motto: str
-    bio: str
+    name: Optional[str]
+    motto: Optional[str]
+    bio: Optional[str]
 
 class create_designation(BaseModel):
-    name: str
-    company: str
-    location: str
+    name: Optional[str]
+    company: Optional[str]
+    location: Optional[str]
 
 class designation(create_designation):
     id: int
 
 class create_awards(BaseModel):
-    title: str
-    year: str
+    title: Optional[str]
+    year: Optional[str]
 
 class awards(create_awards):
     id: int
 
 
 class create_funding(BaseModel):
-    year: str
-    title: str
-    role: str
-    awarded_amount: str
-    time_period: str
-    doner: str
+    year: Optional[str]
+    title: Optional[str]
+    role: Optional[str]
+    awarded_amount: Optional[str]
+    time_period: Optional[str]
+    doner: Optional[str]
 
 
 class funding(create_funding):
