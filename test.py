@@ -16,3 +16,10 @@ print(designation.json())
 #                         })
 
 # print(designation_post.json())
+
+url = "https://port.abirmunna.me/research"
+username = "postman"
+password = "password"
+response = requests.get(url, auth=(username, password))
+print(response.status_code)
+print(response.json())

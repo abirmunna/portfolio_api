@@ -54,17 +54,24 @@ async def read_current_user(username: str = Depends(validate_credentials)):
 def index():
     return {"message": "Hello World"}
 
+@app.get("/user", tags=["user"])
+def get_all_user(db: SessionLocal = Depends(get_db)):
+    return crud.get_all_user(db=db)
 
-# @app.post("/user", tags=["user"])
-# def create_user(user: schemas.user, db: SessionLocal = Depends(get_db),login: str = Depends(validate_credentials)):
-#     db_user = crud.get_user_by_email(db, email=user.email)
-#     if db_user:
-#         return {"message": "Email already registered"}
-#     return crud.create_user(db=db, user=user)
+@app.post("/user", tags=["user"])
+def create_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
+    db_user = crud.get_user_by_email(db, email=user.email)
+    if db_user:
+        return {"message": "Email already registered"}
+    return crud.create_user(db=db, user=user)
 
 @app.put("/user", tags=["user"])
 def edit_user(user: schemas.user, db: SessionLocal = Depends(get_db),login: str = Depends(validate_credentials)):
     return crud.edit_user(db=db, user=user)
+
+@app.delete("/user", tags=["user"])
+def delete_user(user: schemas.user, db: SessionLocal = Depends(get_db),login: str = Depends(validate_credentials)):
+    return crud.delete_user(db=db, user=user)
 
 # @app.post("/login", tags=["user"])
 # def login_user(user: schemas.user, db: SessionLocal = Depends(get_db)):

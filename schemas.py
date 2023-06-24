@@ -4,6 +4,7 @@ from typing import Union, Optional
 class user(BaseModel):
     email: str
     pwd: str
+
  
 
 
