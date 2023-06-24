@@ -3,4 +3,5 @@ sqlalchemy
 pillow
 psycopg2-binary
 mysql-connector-python
+python-dotenv
 

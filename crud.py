@@ -6,10 +6,6 @@ def get_about(db: Session):
     return db.query(models.About).all()
 
 
-def get_all_designations(db: Session):
-    return db.query(models.Designation).all()
-
-
 def create_about(db: Session, about: schemas.about):
     db_about = models.About(name=about.name, motto=about.motto, bio=about.bio)
     db.add(db_about)
@@ -20,13 +16,18 @@ def create_about(db: Session, about: schemas.about):
 
 def edit_about(db: Session, about: schemas.about):
     db_about = db.query(models.About).filter(models.About.id == about.id).first()
-    update_data = about.dict(exclude_unset=True)
+    update_data = about.dict(exclude_unset=True, exclude_null=True)
     db.query(models.About).filter(models.About.id == about.id).update(
         update_data, synchronize_session=False
     )
     db.commit()
     db.refresh(db_about)
     return db_about
+
+
+def get_all_designations(db: Session):
+    # return in ascending order
+    return db.query(models.Designation).order_by(models.Designation.id.asc()).all()
 
 
 def create_designation(db: Session, designation: schemas.create_designation):
@@ -66,7 +67,7 @@ def delete_designation(db: Session, id: int):
 
 
 def get_all_awards(db: Session):
-    return db.query(models.Awards).all()
+    return db.query(models.Awards).order_by(models.Awards.id.asc()).all()
 
 
 def create_awards(db: Session, awards: schemas.create_awards):
@@ -96,7 +97,7 @@ def delete_awards(db: Session, id: int):
 
 
 def get_all_funding(db: Session):
-    return db.query(models.Funding).all()
+    return db.query(models.Funding).order_by(models.Funding.id.asc()).all()
 
 
 def create_funding(db: Session, funding: schemas.create_funding):
