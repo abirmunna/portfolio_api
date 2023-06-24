@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
 class about(BaseModel):
-    name: str
+    id: int
+    name: str 
     motto: str
     bio: str
 

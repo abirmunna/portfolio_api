@@ -15,7 +15,7 @@ def create_about(db: Session, about: schemas.about):
     return db_about
 
 def edit_about(db: Session, about: schemas.about):
-    db_about = db.query(models.About).filter(models.About.name == about.name).first()
+    db_about = db.query(models.About).filter(models.About.id == about.id).first()
     db_about.name = about.name
     db_about.motto = about.motto
     db_about.bio = about.bio
