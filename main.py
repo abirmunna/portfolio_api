@@ -37,13 +37,18 @@ def get_db():
 
 security = HTTPBasic()
 
-def validate_credentials(credentials: HTTPBasicCredentials = Depends(security),db: SessionLocal = Depends(get_db)):
+
+def validate_credentials(
+    credentials: HTTPBasicCredentials = Depends(security),
+    db: SessionLocal = Depends(get_db),
+):
     data = crud.get_user_by_email(db, email=credentials.username)
     if data:
         if data.pwd == credentials.password:
             return data.email
         else:
             return "Not authed"
+
 
 @app.get("/users/me")
 async def read_current_user(username: str = Depends(validate_credentials)):
@@ -54,9 +59,11 @@ async def read_current_user(username: str = Depends(validate_credentials)):
 def index():
     return {"message": "Hello World"}
 
+
 @app.get("/user", tags=["user"])
 def get_all_user(db: SessionLocal = Depends(get_db)):
     return crud.get_all_user(db=db)
+
 
 @app.post("/user", tags=["user"])
 def create_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
@@ -65,13 +72,24 @@ def create_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
         return {"message": "Email already registered"}
     return crud.create_user(db=db, user=user)
 
+
 @app.put("/user", tags=["user"])
-def edit_user(user: schemas.user, db: SessionLocal = Depends(get_db),login: str = Depends(validate_credentials)):
+def edit_user(
+    user: schemas.user,
+    db: SessionLocal = Depends(get_db),
+    login: str = Depends(validate_credentials),
+):
     return crud.edit_user(db=db, user=user)
 
+
 @app.delete("/user", tags=["user"])
-def delete_user(user: schemas.user, db: SessionLocal = Depends(get_db),login: str = Depends(validate_credentials)):
+def delete_user(
+    user: schemas.user,
+    db: SessionLocal = Depends(get_db),
+    login: str = Depends(validate_credentials),
+):
     return crud.delete_user(db=db, user=user)
+
 
 # @app.post("/login", tags=["user"])
 # def login_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
@@ -100,7 +118,11 @@ def about_me(db: SessionLocal = Depends(get_db)):
 
 
 @app.put("/about", tags=["about"])
-def about_me(about: schemas.about, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def about_me(
+    about: schemas.about,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     about = crud.edit_about(db, about)
     return about
 
@@ -124,21 +146,30 @@ def designation(db: SessionLocal = Depends(get_db)):
 
 @app.post("/designation", tags=["designation"])
 def designation(
-    designation: schemas.create_designation, db: SessionLocal = Depends(get_db),
-    username: str = Depends(validate_credentials)
+    designation: schemas.create_designation,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
 ):
     designation = crud.create_designation(db, designation)
     return designation
 
 
 @app.put("/designation", tags=["designation"])
-def designation(designation: schemas.designation, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def designation(
+    designation: schemas.designation,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     designation = crud.edit_designation(db, designation)
     return designation
 
 
 @app.delete("/designation", tags=["designation"])
-def designation(id, db: SessionLocal = Depends(get_db), username: str = Depends(validate_credentials)):
+def designation(
+    id,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     designation = crud.delete_designation(db, id)
     return designation
 
@@ -182,19 +213,31 @@ def awards(db: SessionLocal = Depends(get_db)):
 
 
 @app.post("/awards", tags=["awards"])
-def awards(awards: schemas.create_awards, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def awards(
+    awards: schemas.create_awards,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     awards = crud.create_awards(db, awards)
     return awards
 
 
 @app.put("/awards", tags=["awards"])
-def awards(awards: schemas.awards, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def awards(
+    awards: schemas.awards,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     awards = crud.edit_awards(db, awards)
     return awards
 
 
 @app.delete("/awards", tags=["awards"])
-def awards(id, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def awards(
+    id,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     awards = crud.delete_awards(db, id)
     return awards
 
@@ -216,19 +259,31 @@ def funding(db: SessionLocal = Depends(get_db)):
 
 
 @app.post("/funding", tags=["funding"])
-def funding(funding: schemas.create_funding, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def funding(
+    funding: schemas.create_funding,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     funding = crud.create_funding(db, funding)
     return funding
 
 
 @app.put("/funding", tags=["funding"])
-def funding(funding: schemas.funding, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def funding(
+    funding: schemas.funding,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     funding = crud.edit_funding(db, funding)
     return funding
 
 
 @app.delete("/funding", tags=["funding"])
-def funding(id, db: SessionLocal = Depends(get_db), username: str = Depends(validate_credentials)):
+def funding(
+    id,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     funding = crud.delete_funding(db, id)
     return funding
 
@@ -240,19 +295,31 @@ def research(db: SessionLocal = Depends(get_db)):
 
 
 @app.post("/research", tags=["research"])
-def research(research: schemas.create_research, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def research(
+    research: schemas.create_research,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     research = crud.create_research(db, research)
     return research
 
 
 @app.put("/research", tags=["research"])
-def research(research: schemas.research, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def research(
+    research: schemas.research,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     research = crud.edit_research(db, research)
     return research
 
 
 @app.delete("/research", tags=["research"])
-def research(id, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def research(
+    id,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     research = crud.delete_research(db, id)
     return research
 
@@ -265,8 +332,9 @@ def publications(db: SessionLocal = Depends(get_db)):
 
 @app.post("/publications", tags=["publications"])
 def publications(
-    publications: schemas.create_publications, db: SessionLocal = Depends(get_db),
-    username: str = Depends(validate_credentials)
+    publications: schemas.create_publications,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
 ):
     publications = crud.create_publications(db, publications)
     return publications
@@ -274,14 +342,19 @@ def publications(
 
 @app.put("/publications", tags=["publications"])
 def publications(
-    publications: schemas.create_publications, db: SessionLocal = Depends(get_db),
-    username: str = Depends(validate_credentials)
+    publications: schemas.create_publications,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
 ):
     publications = crud.edit_publications(db, publications)
     return publications
 
 
 @app.delete("/publications", tags=["publications"])
-def publications(id, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
+def publications(
+    id,
+    db: SessionLocal = Depends(get_db),
+    username: str = Depends(validate_credentials),
+):
     publications = crud.delete_publications(db, id)
     return publications

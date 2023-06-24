@@ -9,11 +9,13 @@ class User(Base):
     email = Column(String(255))
     pwd = Column(String(255))
 
+
 class Token(Base):
-    __tablename__="token"	
+    __tablename__ = "token"
     id = Column(Integer, primary_key=True, index=True)
     access_token = Column(String(255))
     token_type = Column(String(255))
+
 
 class About(Base):
     __tablename__ = "about"

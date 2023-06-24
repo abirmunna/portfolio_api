@@ -6,8 +6,9 @@ def create_user(db: Session, user: schemas.user):
     db_user = models.User(email=user.email, pwd=user.pwd)
     db.add(db_user)
     db.commit()
-    db.refresh(db_user) 
+    db.refresh(db_user)
     return db_user
+
 
 def delete_user(db: Session, user: schemas.user):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
@@ -15,8 +16,10 @@ def delete_user(db: Session, user: schemas.user):
     db.commit()
     return db_user
 
+
 def get_all_user(db: Session):
     return db.query(models.User).all()
+
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
@@ -39,7 +42,6 @@ def login_user(db: Session, user: schemas.user):
         return db_user
     else:
         return None
-
 
 
 def get_about(db: Session):

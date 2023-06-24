@@ -1,11 +1,10 @@
 from pydantic import BaseModel
 from typing import Union, Optional
 
+
 class user(BaseModel):
     email: str
     pwd: str
-
- 
 
 
 class about(BaseModel):
