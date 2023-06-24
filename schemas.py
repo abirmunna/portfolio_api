@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 from typing import Union, Optional
 
+class user(BaseModel):
+    email: str
+    pwd: str
+ 
+
 
 class about(BaseModel):
     id: int
@@ -47,10 +52,10 @@ class create_publications(BaseModel):
     authors: Optional[str]
     research_id: int
 
+
 class publications(create_publications):
     id: int
-    
-    
+
     class Config:
         orm_mode = True
 
@@ -59,10 +64,10 @@ class create_research(BaseModel):
     title: str
     description: str
 
+
 class research(create_research):
     id: int
     publications: list[publications]
 
     class Config:
         orm_mode = True
-

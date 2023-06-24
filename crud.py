@@ -2,6 +2,37 @@ from sqlalchemy.orm import Session
 import models, schemas
 
 
+def create_user(db: Session, user: schemas.user):
+    db_user = models.User(email=user.email, pwd=user.password)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user) 
+    return db_user
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
+
+
+def edit_user(db: Session, user: schemas.user):
+    db_user = db.query(models.User).filter(models.User.id == 1).first()
+    update_data = user.dict(exclude_unset=True)
+    db.query(models.User).filter(models.User.id == 1).update(
+        update_data, synchronize_session=False
+    )
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
+def login_user(db: Session, user: schemas.user):
+    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if db_user.pwd == user.pwd:
+        return db_user
+    else:
+        return None
+
+
+
 def get_about(db: Session):
     return db.query(models.About).all()
 
@@ -16,7 +47,7 @@ def create_about(db: Session, about: schemas.about):
 
 def edit_about(db: Session, about: schemas.about):
     db_about = db.query(models.About).filter(models.About.id == about.id).first()
-    update_data = about.dict(exclude_unset=True, exclude_null=True)
+    update_data = about.dict(exclude_unset=True)
     db.query(models.About).filter(models.About.id == about.id).update(
         update_data, synchronize_session=False
     )
@@ -138,6 +169,7 @@ def delete_funding(db: Session, id: int):
 def get_all_research(db: Session):
     return db.query(models.Research).order_by(models.Research.id.desc()).all()
 
+
 def create_research(db: Session, research: schemas.create_research):
     db_research = models.Research(
         title=research.title,
@@ -147,6 +179,7 @@ def create_research(db: Session, research: schemas.create_research):
     db.commit()
     db.refresh(db_research)
     return db_research
+
 
 def edit_research(db: Session, research: schemas.research):
     db_research = (
@@ -160,14 +193,17 @@ def edit_research(db: Session, research: schemas.research):
     db.refresh(db_research)
     return db_research
 
+
 def delete_research(db: Session, id: int):
     db_research = db.query(models.Research).filter(models.Research.id == id).first()
     db.delete(db_research)
     db.commit()
     return db_research
 
+
 def get_all_publications(db: Session):
     return db.query(models.Publications).order_by(models.Publications.id.desc()).all()
+
 
 def create_publications(db: Session, publications: schemas.create_publications):
     db_publications = models.Publications(
@@ -182,21 +218,26 @@ def create_publications(db: Session, publications: schemas.create_publications):
     db.refresh(db_publications)
     return db_publications
 
+
 def edit_publications(db: Session, publications: schemas.publications):
     db_publications = (
-        db.query(models.Publications).filter(models.Publications.id == publications.id).first()
+        db.query(models.Publications)
+        .filter(models.Publications.id == publications.id)
+        .first()
     )
     update_data = publications.dict(exclude_unset=True)
-    db.query(models.Publications).filter(models.Publications.id == publications.id).update(
-        update_data, synchronize_session=False
-    )
+    db.query(models.Publications).filter(
+        models.Publications.id == publications.id
+    ).update(update_data, synchronize_session=False)
     db.commit()
     db.refresh(db_publications)
     return db_publications
 
+
 def delete_publications(db: Session, id: int):
-    db_publications = db.query(models.Publications).filter(models.Publications.id == id).first()
+    db_publications = (
+        db.query(models.Publications).filter(models.Publications.id == id).first()
+    )
     db.delete(db_publications)
     db.commit()
     return db_publications
-

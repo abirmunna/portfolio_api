@@ -3,6 +3,18 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
+class User(Base):
+    __tablename__ = "user"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255))
+    pwd = Column(String(255))
+
+class Token(Base):
+    __tablename__="token"	
+    id = Column(Integer, primary_key=True, index=True)
+    access_token = Column(String(255))
+    token_type = Column(String(255))
+
 class About(Base):
     __tablename__ = "about"
     id = Column(Integer, primary_key=True, index=True)
