@@ -9,15 +9,21 @@ from io import BytesIO
 import crud, models, schemas
 from database import SessionLocal, engine
 
+# create the database
 models.Base.metadata.create_all(bind=engine)
-IMAGEDIR = "tmp/images/"
+
+# not implemented yet
+IMAGEDIR = "/images"
 
 app = FastAPI()
 
 
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
+app.add_middleware(
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"]
+)  # CORS set to allow all origins and methods
 
 
+# initializing the database in db
 def get_db():
     db = SessionLocal()
     try:
@@ -31,13 +37,22 @@ def index():
     return {"message": "Hello World"}
 
 
-# about me section
+"""
+    About Section starts here
+    This section is for the about me section of the website
+    -routes:
+        -/about(GET): returns the about me section
+        -/about(PUT): edits the about me section
+"""
+
+
 @app.get("/about", tags=["about"])
 def about_me(db: SessionLocal = Depends(get_db)):
     about = crud.get_about(db)
     return about
 
 
+# only for dev use
 # @app.post('/about')
 # def about_me(about: schemas.about, db: SessionLocal = Depends(get_db)):
 #     about = crud.create_about(db, about)
@@ -50,7 +65,17 @@ def about_me(about: schemas.about, db: SessionLocal = Depends(get_db)):
     return about
 
 
-# designation section
+"""
+    Designation Section starts here
+
+    -routes:
+        -/designation(GET): returns all the designations
+        -/designation(POST): creates a new designation
+        -/designation(PUT): edits a designation
+        -/designation(DELETE): deletes a designation
+"""
+
+
 @app.get("/designation", tags=["designation"])
 def designation(db: SessionLocal = Depends(get_db)):
     designation = crud.get_all_designations(db)
@@ -77,27 +102,36 @@ def designation(id, db: SessionLocal = Depends(get_db)):
     return designation
 
 
-# picture section
-@app.post("/upload/", tags=["picture"])
-async def create_upload_file(file: UploadFile = File(...)):
-    file.filename = f"profile.jpg"
-    contents = await file.read()
+# picture section(Not implemented yet)
+# @app.post("/upload/", tags=["picture"])
+# async def create_upload_file(file: UploadFile = File(...)):
+#     file.filename = f"profile.jpg"
+#     contents = await file.read()
 
-    # save the file
-    with open(f"{IMAGEDIR}{file.filename}", "wb") as f:
-        f.write(contents)
+#     # save the file
+#     with open(f"{IMAGEDIR}{file.filename}", "wb") as f:
+#         f.write(contents)
 
-    return {"filename": file.filename}
+#     return {"filename": file.filename}
 
 
-@app.get("/image", tags=["picture"])
-def get_image():
-    image_path = "tmp/images/profile.jpg"  # Replace with the actual path to your image
-    img = Image.open(image_path)
-    img_byte_arr = BytesIO()
-    img.save(img_byte_arr, format="JPEG")
-    img_byte_arr.seek(0)
-    return StreamingResponse(img_byte_arr, media_type="image/jpeg")
+# @app.get("/image", tags=["picture"])
+# def get_image():
+#     image_path = "tmp/images/profile.jpg"  # Replace with the actual path to your image
+#     img = Image.open(image_path)
+#     img_byte_arr = BytesIO()
+#     img.save(img_byte_arr, format="JPEG")
+#     img_byte_arr.seek(0)
+#     return StreamingResponse(img_byte_arr, media_type="image/jpeg")
+
+"""
+    Awards Section starts here
+    -routes:
+        -/awards(GET): returns all the awards
+        -/awards(POST): creates a new award
+        -/awards(PUT): edits a award
+        -/awards(DELETE): deletes a award
+"""
 
 
 @app.get("/awards", tags=["awards"])
@@ -122,6 +156,16 @@ def awards(awards: schemas.awards, db: SessionLocal = Depends(get_db)):
 def awards(id, db: SessionLocal = Depends(get_db)):
     awards = crud.delete_awards(db, id)
     return awards
+
+
+"""
+    Funding Section starts here
+    -routes:
+        -/funding(GET): returns all the funding
+        -/funding(POST): creates a new funding
+        -/funding(PUT): edits a funding
+        -/funding(DELETE): deletes a funding
+"""
 
 
 @app.get("/funding", tags=["funding"])
