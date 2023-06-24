@@ -185,6 +185,7 @@ def edit_research(db: Session, research: schemas.research):
     db_research = (
         db.query(models.Research).filter(models.Research.id == research.id).first()
     )
+    
     update_data = research.dict(exclude_unset=True)
     db.query(models.Research).filter(models.Research.id == research.id).update(
         update_data, synchronize_session=False

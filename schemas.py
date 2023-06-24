@@ -67,7 +67,7 @@ class create_research(BaseModel):
 
 class research(create_research):
     id: int
-    publications: list[publications]
+    publications: Optional[list[publications]]
 
     class Config:
         orm_mode = True
