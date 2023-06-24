@@ -239,7 +239,7 @@ def research(research: schemas.create_research, db: SessionLocal = Depends(get_d
 
 
 @app.put("/research", tags=["research"])
-def research(research: schemas.research, db: SessionLocal = Depends(get_db)):
+def research(research: schemas.research, db: SessionLocal = Depends(get_db),username: str = Depends(validate_credentials)):
     research = crud.edit_research(db, research)
     return research
 
