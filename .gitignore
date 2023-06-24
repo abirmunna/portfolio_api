@@ -13,7 +13,7 @@ Discovery.md
 *.sqlite3
 *.db
 /sql_app.db
-
+.env
 # Distribution / packaging
 .Python
 build/
