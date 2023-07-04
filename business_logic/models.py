@@ -1,5 +1,8 @@
 from sqlalchemy import Integer, String, Column, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
+
+import sys
+sys.path.append("..")
 from database import Base
 
 

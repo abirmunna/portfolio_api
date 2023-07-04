@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-import models, schemas
+from . import models, schemas
 
 
 def create_user(db: Session, user: schemas.user):
@@ -59,9 +59,15 @@ def create_about(db: Session, about: schemas.about):
 def edit_about(db: Session, about: schemas.about):
     db_about = db.query(models.About).filter(models.About.id == about.id).first()
     update_data = about.dict(exclude_unset=True)
-    db.query(models.About).filter(models.About.id == about.id).update(
-        update_data, synchronize_session=False
+    result = (
+        db.query(models.About)
+        .filter(models.About.id == about.id)
+        .update(update_data, synchronize_session=False)
     )
+    if result:
+        db.commit()
+        db.refresh(db_about)
+        return db_about
     db.commit()
     db.refresh(db_about)
     return db_about
