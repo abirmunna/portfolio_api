@@ -50,7 +50,8 @@ class create_publications(BaseModel):
     title: Optional[str]
     published: Optional[str]
     authors: Optional[str]
-    research_id: int
+    publications_type: Optional[str] = "unknown"
+    research_id: Optional[int]
 
 
 class publications(create_publications):
@@ -61,8 +62,9 @@ class publications(create_publications):
 
 
 class create_research(BaseModel):
-    title: str
-    description: str
+    title: Optional[str]
+    description: Optional[str]
+    status: Optional[str]
 
 
 class research(create_research):

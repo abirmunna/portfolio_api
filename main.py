@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from business_logic import models
 from database import engine
 from routers import user, about, designation, awards, research, publication, funding
+
 # create the database
 models.Base.metadata.create_all(bind=engine)
 

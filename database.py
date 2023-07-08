@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
 import os
@@ -17,6 +17,13 @@ engine = create_engine(POSTGRESQL_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+# Session = SessionLocal()
+# # Add the new column to the table
+# Session.execute(text('ALTER TABLE research ADD COLUMN status VARCHAR(255)'))
+# Session.execute(text('ALTER TABLE publications ADD COLUMN publications_type VARCHAR(255)'))
+
+# # Commit the changes
+# Session.commit()
 
 
 # initializing the database in db

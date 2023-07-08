@@ -191,6 +191,7 @@ def create_research(db: Session, research: schemas.create_research):
     db_research = models.Research(
         title=research.title,
         description=research.description,
+        status=research.status,
     )
     db.add(db_research)
     db.commit()
@@ -228,6 +229,7 @@ def create_publications(db: Session, publications: schemas.create_publications):
         title=publications.title,
         published=publications.published,
         authors=publications.authors,
+        publications_type=publications.publications_type,
         research_id=publications.research_id,
     )
 
