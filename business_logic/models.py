@@ -2,6 +2,7 @@ from sqlalchemy import Integer, String, Column, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
 import sys
+
 sys.path.append("..")
 from database import Base
 
@@ -62,6 +63,7 @@ class Research(Base):
     status = Column(String(255))
 
     publications = relationship("Publications", back_populates="research")
+
 
 class Publications(Base):
     __tablename__ = "publications"

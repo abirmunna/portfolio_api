@@ -9,19 +9,21 @@ from routers import user, about, designation, awards, research, publication, fun
 models.Base.metadata.create_all(bind=engine)
 
 IMAGEDIR = "/images"
+prefix = "/api/v1"
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
-
-app.include_router(user.router)
-app.include_router(about.router)
-app.include_router(designation.router)
-app.include_router(awards.router)
-app.include_router(research.router)
-app.include_router(publication.router)
-app.include_router(funding.router)
 
 
 @app.get("/")
 def is_aive():
     return {"message": "Hello World"}
+
+
+app.include_router(user.router, prefix=prefix)
+app.include_router(about.router, prefix=prefix)
+app.include_router(designation.router, prefix=prefix)
+app.include_router(awards.router, prefix=prefix)
+app.include_router(research.router, prefix=prefix)
+app.include_router(publication.router, prefix=prefix)
+app.include_router(funding.router, prefix=prefix)
