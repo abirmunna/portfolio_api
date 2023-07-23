@@ -1,6 +1,5 @@
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import HTMLResponse
-from business_logic import crud, schemas
 from deta import Deta
 
 deta = Deta()
