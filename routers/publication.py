@@ -22,7 +22,7 @@ def create_publications(
 
 @router.put("/")
 def update_publications(
-    publications: schemas.create_publications, db: SessionLocal = Depends(get_db)
+    publications: schemas.publications , db: SessionLocal = Depends(get_db)
 ):
     publications = crud.edit_publications(db, publications)
     return publications
