@@ -26,7 +26,7 @@ class About(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255))
     motto = Column(String(255))
-    bio = Column(String(255))
+    bio = Column(String(25500))
 
 
 class Designation(Base):
@@ -59,7 +59,7 @@ class Research(Base):
     __tablename__ = "research"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255))
-    description = Column(String(255))
+    description = Column(String(25500))
     status = Column(String(255))
 
     publications = relationship("Publications", back_populates="research")

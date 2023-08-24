@@ -17,13 +17,16 @@ engine = create_engine(POSTGRESQL_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-# Session = SessionLocal()
+Session = SessionLocal()
 # # Add the new column to the table
 # Session.execute(text('ALTER TABLE research ADD COLUMN status VARCHAR(255)'))
 # Session.execute(text('ALTER TABLE publications ADD COLUMN publications_type VARCHAR(255)'))
+# alter the string size for About table motto column
+# Session.execute(text('ALTER TABLE about ALTER COLUMN bio TYPE VARCHAR(25500)'))
+Session.execute(text('ALTER TABLE research ALTER COLUMN description TYPE VARCHAR(25500)'))
+# Commit the changes
+Session.commit()
 
-# # Commit the changes
-# Session.commit()
 
 
 # initializing the database in db
