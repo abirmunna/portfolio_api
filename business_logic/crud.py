@@ -231,6 +231,7 @@ def create_publications(db: Session, publications: schemas.create_publications):
         authors=publications.authors,
         publications_type=publications.publications_type,
         research_id=publications.research_id,
+        url=publications.url,
     )
 
     db.add(db_publications)

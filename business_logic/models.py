@@ -73,5 +73,6 @@ class Publications(Base):
     authors = Column(String(255))
     publications_type = Column(String(255))
     research_id = Column(Integer, ForeignKey("research.id"))
+    url = Column(String(25500))
 
     research = relationship("Research", back_populates="publications")

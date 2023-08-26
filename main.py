@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from business_logic import models
 from database import engine
-from routers import user, about, designation, awards, research, publication, funding, image
+from routers import user, about, designation, awards, research, publication, funding, image, cv
 
 # create the database
 models.Base.metadata.create_all(bind=engine)
@@ -28,3 +28,4 @@ app.include_router(research.router, prefix=prefix)
 app.include_router(publication.router, prefix=prefix)
 app.include_router(funding.router, prefix=prefix)
 app.include_router(image.router, prefix=prefix)
+app.include_router(cv.router, prefix=prefix)

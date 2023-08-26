@@ -52,6 +52,7 @@ class create_publications(BaseModel):
     authors: Optional[str]
     publications_type: Optional[str] = "unknown"
     research_id: Optional[int]
+    url: Optional[str]
 
 
 class publications(create_publications):
