@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 # loading test.env from backend directory
-load_dotenv("test.env")
+load_dotenv(".env")
 
 POSTGRESQL_DATABASE_URL = os.getenv("DB")
 
@@ -18,7 +18,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 # Session = SessionLocal()
-# # Add the new column to the table
+# Add the new column to the table
 # Session.execute(text('ALTER TABLE research ADD COLUMN status VARCHAR(255)'))
 # Session.execute(text('ALTER TABLE publications ADD COLUMN publications_type VARCHAR(255)'))
 # Session.execute(text('ALTER TABLE publications ADD COLUMN url VARCHAR(25500)'))
