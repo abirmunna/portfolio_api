@@ -6,13 +6,13 @@ import os
 # loading test.env from backend directory
 load_dotenv(".env")
 
-POSTGRESQL_DATABASE_URL = os.getenv("DB")
+# POSTGRESQL_DATABASE_URL = os.getenv("DB")
 
-# print(POSTGRESQL_DATABASE_URL)
-if POSTGRESQL_DATABASE_URL is None:
-    raise ValueError("DB is not set")
+# # print(POSTGRESQL_DATABASE_URL)
+# if POSTGRESQL_DATABASE_URL is None:
+#     raise ValueError("DB is not set")
 
-engine = create_engine(POSTGRESQL_DATABASE_URL)
+engine = create_engine("sqlite:///./database.db", connect_args={"check_same_thread": False})
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -35,5 +35,5 @@ def get_db():
     db = SessionLocal()
     try:
         yield db
-    except:
+    finally:
         db.close()
