@@ -2,7 +2,7 @@ from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import FileResponse
 import os
 
-CVDIR = "../cv"
+CVDIR = "/home/ubuntu/portfolio_api/cv"
 
 router = APIRouter(prefix="/cv", tags=["cv"])
 

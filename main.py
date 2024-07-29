@@ -59,7 +59,7 @@ def is_logged_in(data: str = Depends(manager)):
     return True
 
 
-app.include_router(user.router, prefix=prefix, dependencies=[Depends(manager)])
+app.include_router(user.router, prefix=prefix,dependencies=[Depends(manager)])
 app.include_router(about.router, prefix=prefix, dependencies=[Depends(manager)])
 app.include_router(designation.router, prefix=prefix, dependencies=[Depends(manager)])
 app.include_router(awards.router, prefix=prefix, dependencies=[Depends(manager)])

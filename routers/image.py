@@ -4,7 +4,7 @@ import os
 
 router = APIRouter(prefix="/image", tags=["image"])
 
-IMAGEDIR = "../images"
+IMAGEDIR = "/home/ubuntu/portfolio_api/images"
 @router.get("/get_all")
 def get_all_image_names():
     return os.listdir(IMAGEDIR)
