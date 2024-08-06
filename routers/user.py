@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from business_logic import crud, schemas
 from database import SessionLocal, get_db
-from main import manager
 
 
 router = APIRouter()
@@ -13,7 +12,7 @@ def get_all_user(db: SessionLocal = Depends(get_db)):
 
 
 @router.post("/user", tags=["user"])
-def create_user(user: schemas.user, db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]):
+def create_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         return {"message": "Email already registered"}
@@ -21,10 +20,10 @@ def create_user(user: schemas.user, db: SessionLocal = Depends(get_db), dependen
 
 
 @router.put("/user", tags=["user"])
-def edit_user(user: schemas.user, db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]):
+def edit_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
     return crud.edit_user(db=db, user=user)
 
 
 @router.delete("/user", tags=["user"])
-def delete_user(user: schemas.user, db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]):
+def delete_user(user: schemas.user, db: SessionLocal = Depends(get_db)):
     return crud.delete_user(db=db, user=user)

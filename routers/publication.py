@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from business_logic import crud, schemas
 from database import SessionLocal, get_db
-from main import manager
 
 
 router = APIRouter(prefix="/publications", tags=["publications"])
@@ -15,7 +14,7 @@ def get_publications(db: SessionLocal = Depends(get_db)):
 
 @router.post("/")
 def create_publications(
-    publications: schemas.create_publications, db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]
+    publications: schemas.create_publications, db: SessionLocal = Depends(get_db)
 ):
     publications = crud.create_publications(db, publications)
     return publications
@@ -23,13 +22,13 @@ def create_publications(
 
 @router.put("/")
 def update_publications(
-    publications: schemas.publications , db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]
+    publications: schemas.publications , db: SessionLocal = Depends(get_db)
 ):
     publications = crud.edit_publications(db, publications)
     return publications
 
 
 @router.delete("/")
-def del_publications(id, db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]):
+def del_publications(id, db: SessionLocal = Depends(get_db)):
     publications = crud.delete_publications(db, id)
     return publications

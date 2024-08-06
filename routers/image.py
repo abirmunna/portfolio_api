@@ -1,7 +1,6 @@
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import FileResponse
 import os
-from main import manager
 
 router = APIRouter(prefix="/image", tags=["image"])
 
@@ -17,7 +16,7 @@ def get_image(filename: str):
 
 
 @router.post("/uploads")
-def upload_image(file: UploadFile = File(...), dependencies=[Depends(manager)]):
+def upload_image(file: UploadFile = File(...)):
     filename = file.filename
     with open(os.path.join(IMAGEDIR, filename), "wb") as f:
         f.write(file.file.read())
