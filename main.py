@@ -59,14 +59,14 @@ def is_logged_in(data: str = Depends(manager)):
 
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_headers=["*"], allow_methods=["*"])
-app.include_router(user.router, prefix=prefix,dependencies=[Depends(manager)])
-app.include_router(about.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(designation.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(awards.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(research.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(publication.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(funding.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(image.router, prefix=prefix, dependencies=[Depends(manager)])
-app.include_router(cv.router, prefix=prefix, dependencies=[Depends(manager)])
+app.include_router(user.router, prefix=prefix)
+app.include_router(about.router, prefix=prefix)
+app.include_router(designation.router, prefix=prefix)
+app.include_router(awards.router, prefix=prefix)
+app.include_router(research.router, prefix=prefix)
+app.include_router(publication.router, prefix=prefix)
+app.include_router(funding.router, prefix=prefix)
+app.include_router(image.router, prefix=prefix)
+app.include_router(cv.router, prefix=prefix)
 
 
