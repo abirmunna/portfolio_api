@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from business_logic import crud, schemas
 from database import SessionLocal, get_db
+from main import manager
 
 router = APIRouter(prefix="/about", tags=["about"])
 
@@ -19,7 +20,7 @@ def get_about_me(db: SessionLocal = Depends(get_db)):
 
 
 @router.put("/")
-def update_about_me(about: schemas.about, db: SessionLocal = Depends(get_db)):
+def update_about_me(about: schemas.about, db: SessionLocal = Depends(get_db), dependencies=[Depends(manager)]):
     if crud.get_about(db=db) is None:
         raise ValueError("About me is not set")
 
