@@ -22,7 +22,6 @@ IMAGEDIR = "/images"
 prefix = "/api/v1"
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
 
 manager = LoginManager("secret", "/login")
 
@@ -50,7 +49,7 @@ def login(data: OAuth2PasswordRequestForm = Depends()):
     elif pwd != user_data.pwd:
         raise InvalidCredentialsException
 
-    access_token = manager.create_access_token(data={"sub": email}, expires=datetime.timedelta(minutes=1))
+    access_token = manager.create_access_token(data={"sub": email}, expires=datetime.timedelta(minutes=30))
     return {"access_token": access_token}
 
 
@@ -59,6 +58,7 @@ def is_logged_in(data: str = Depends(manager)):
     return True
 
 
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_headers=["*"], allow_methods=["*"])
 app.include_router(user.router, prefix=prefix,dependencies=[Depends(manager)])
 app.include_router(about.router, prefix=prefix, dependencies=[Depends(manager)])
 app.include_router(designation.router, prefix=prefix, dependencies=[Depends(manager)])
