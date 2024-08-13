@@ -13,10 +13,10 @@ def get_about_me(db: SessionLocal = Depends(get_db)):
 
 
 # only for dev use
-# @router.post("/")
-# def about_me(about: schemas.about, db: SessionLocal = Depends(get_db)):
-#     about = crud.create_about(db, about)
-#     return about
+@router.post("/")
+def about_me(about: schemas.about, data: str = Depends(manager), db: SessionLocal = Depends(get_db)):
+    about = crud.create_about(db, about)
+    return about
 
 
 @router.put("/")

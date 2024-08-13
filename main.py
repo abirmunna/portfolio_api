@@ -42,7 +42,7 @@ def login(data: OAuth2PasswordRequestForm = Depends()):
     elif pwd != user_data.pwd:
         raise InvalidCredentialsException
 
-    access_token = manager.create_access_token(data={"sub": email}, expires=datetime.timedelta(minutes=1))
+    access_token = manager.create_access_token(data={"sub": email}, expires=datetime.timedelta(minutes=3600))
     return {"access_token": access_token}
 
 
