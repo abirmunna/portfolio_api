@@ -22,7 +22,7 @@ models.Base.metadata.create_all(bind=engine)
 prefix = "/api/v1"
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
 
